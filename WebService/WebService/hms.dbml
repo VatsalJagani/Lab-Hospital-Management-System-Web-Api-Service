@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="hms_db" Class="hmsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=hms_db;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="hms_dbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.bill" Member="bills">
+    <Type Name="bill">
+      <Column Name="pid" Type="System.Decimal" DbType="Decimal(8,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="checkin_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="bill_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="bill_by" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="bill_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="doctor_fee" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Column Name="room_fee" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Column Name="lab_fee" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Column Name="medical_fee" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Column Name="op_fee" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Column Name="other_fee" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Association Name="checkin_bill" Member="checkin" ThisKey="pid,checkin_no" OtherKey="pid,checkin_no" Type="checkin" IsForeignKey="true" />
+      <Association Name="employee_bill" Member="employee" ThisKey="bill_by" OtherKey="empid" Type="employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.checkin" Member="checkins">
+    <Type Name="checkin">
+      <Column Name="pid" Type="System.Decimal" DbType="Decimal(8,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="checkin_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="checkin_by" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="room" Type="System.Decimal" DbType="Decimal(3,0)" CanBeNull="true" />
+      <Column Name="in_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="out_time" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="checkin_bill" Member="bills" ThisKey="pid,checkin_no" OtherKey="pid,checkin_no" Type="bill" />
+      <Association Name="checkin_lab_report" Member="lab_reports" ThisKey="pid,checkin_no" OtherKey="pid,checkin_no" Type="lab_report" />
+      <Association Name="checkin_medical_bill" Member="medical_bills" ThisKey="pid,checkin_no" OtherKey="pid,checkin_no" Type="medical_bill" />
+      <Association Name="checkin_treatment" Member="treatments" ThisKey="pid,checkin_no" OtherKey="pid,checkin_no" Type="treatment" />
+      <Association Name="employee_checkin" Member="employee" ThisKey="checkin_by" OtherKey="empid" Type="employee" IsForeignKey="true" />
+      <Association Name="patient_checkin" Member="patient" ThisKey="pid" OtherKey="pid" Type="patient" IsForeignKey="true" />
+      <Association Name="room_checkin" Member="room1" ThisKey="room" OtherKey="room_no" Type="room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.doctor" Member="doctors">
+    <Type Name="doctor">
+      <Column Name="doctorid" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="userid" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="contact_no" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="city" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="gender" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="info" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Association Name="doctor_treatment" Member="treatments" ThisKey="doctorid" OtherKey="checkup_by" Type="treatment" />
+      <Association Name="user_doctor" Member="user" ThisKey="userid" OtherKey="userid" Type="user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.employee" Member="employees">
+    <Type Name="employee">
+      <Column Name="empid" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="userid" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="emp_type" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="contact_no" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="city" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="marital_status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="gender" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="birthdate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="job_start" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="job_end" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="employee_bill" Member="bills" ThisKey="empid" OtherKey="bill_by" Type="bill" />
+      <Association Name="employee_checkin" Member="checkins" ThisKey="empid" OtherKey="checkin_by" Type="checkin" />
+      <Association Name="employee_lab_report" Member="lab_reports" ThisKey="empid" OtherKey="laboratory_by" Type="lab_report" />
+      <Association Name="employee_medical_bill" Member="medical_bills" ThisKey="empid" OtherKey="med_by" Type="medical_bill" />
+      <Association Name="employee_patient" Member="patients" ThisKey="empid" OtherKey="reg_by" Type="patient" />
+      <Association Name="employee_place" Member="places" ThisKey="empid" OtherKey="shift1" Type="place" />
+      <Association Name="employee_place1" Member="places1" ThisKey="empid" OtherKey="shift2" Type="place" />
+      <Association Name="employee_place2" Member="places2" ThisKey="empid" OtherKey="shift3" Type="place" />
+      <Association Name="user_employee" Member="user" ThisKey="userid" OtherKey="userid" Type="user" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.lab_report" Member="lab_reports">
+    <Type Name="lab_report">
+      <Column Name="pid" Type="System.Decimal" DbType="Decimal(8,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="checkin_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="laboratory_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="glucose" Type="System.Decimal" DbType="Decimal(6,2)" CanBeNull="true" />
+      <Column Name="hemoglobin" Type="System.Decimal" DbType="Decimal(6,2)" CanBeNull="true" />
+      <Column Name="rdc" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="wbc" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="afp" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="hcg" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="psa" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="lab_description" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="cost" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Column Name="lab_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="laboratory_by" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Association Name="employee_lab_report" Member="employee" ThisKey="laboratory_by" OtherKey="empid" Type="employee" IsForeignKey="true" />
+      <Association Name="checkin_lab_report" Member="checkin" ThisKey="pid,checkin_no" OtherKey="pid,checkin_no" Type="checkin" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.medical_bill" Member="medical_bills">
+    <Type Name="medical_bill">
+      <Column Name="pid" Type="System.Decimal" DbType="Decimal(8,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="checkin_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="med_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="med_by" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="med_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="med_description" Type="System.String" DbType="VarChar(300) NOT NULL" CanBeNull="false" />
+      <Column Name="cost" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
+      <Association Name="employee_medical_bill" Member="employee" ThisKey="med_by" OtherKey="empid" Type="employee" IsForeignKey="true" />
+      <Association Name="checkin_medical_bill" Member="checkin" ThisKey="pid,checkin_no" OtherKey="pid,checkin_no" Type="checkin" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.operation_th" Member="operation_ths">
+    <Type Name="operation_th">
+      <Column Name="ot_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="place_id" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="ot_type" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Association Name="place_operation_th" Member="place" ThisKey="place_id" OtherKey="place_id" Type="place" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.patient" Member="patients">
+    <Type Name="patient">
+      <Column Name="pid" Type="System.Decimal" DbType="Decimal(8,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="contact_no" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="city" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="marital_status" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="gender" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="birthdate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="reg_by" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="reg_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="patient_checkin" Member="checkins" ThisKey="pid" OtherKey="pid" Type="checkin" />
+      <Association Name="employee_patient" Member="employee" ThisKey="reg_by" OtherKey="empid" Type="employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.places" Member="places">
+    <Type Name="place">
+      <Column Name="place_id" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="place_type" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="shift1" Type="System.Decimal" DbType="Decimal(4,0)" CanBeNull="true" />
+      <Column Name="shift2" Type="System.Decimal" DbType="Decimal(4,0)" CanBeNull="true" />
+      <Column Name="shift3" Type="System.Decimal" DbType="Decimal(4,0)" CanBeNull="true" />
+      <Association Name="place_operation_th" Member="operation_ths" ThisKey="place_id" OtherKey="place_id" Type="operation_th" />
+      <Association Name="place_room" Member="rooms" ThisKey="place_id" OtherKey="place_id" Type="room" />
+      <Association Name="employee_place" Member="employee" ThisKey="shift1" OtherKey="empid" Type="employee" IsForeignKey="true" />
+      <Association Name="employee_place1" Member="employee1" ThisKey="shift2" OtherKey="empid" Type="employee" IsForeignKey="true" />
+      <Association Name="employee_place2" Member="employee2" ThisKey="shift3" OtherKey="empid" Type="employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.rooms" Member="rooms">
+    <Type Name="room">
+      <Column Name="room_no" Type="System.Decimal" DbType="Decimal(3,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="place_id" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="capacity" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" CanBeNull="false" />
+      <Association Name="room_checkin" Member="checkins" ThisKey="room_no" OtherKey="room" Type="checkin" />
+      <Association Name="place_room" Member="place" ThisKey="place_id" OtherKey="place_id" Type="place" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.treatment" Member="treatments">
+    <Type Name="treatment">
+      <Column Name="pid" Type="System.Decimal" DbType="Decimal(8,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="checkin_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tr_no" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tr_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="checkup_by" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL" CanBeNull="false" />
+      <Column Name="medical_pre" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="lab_pre" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="suggestion" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="checkin_treatment" Member="checkin" ThisKey="pid,checkin_no" OtherKey="pid,checkin_no" Type="checkin" IsForeignKey="true" />
+      <Association Name="doctor_treatment" Member="doctor" ThisKey="checkup_by" OtherKey="doctorid" Type="doctor" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.users" Member="users">
+    <Type Name="user">
+      <Column Name="userid" Type="System.Decimal" DbType="Decimal(4,0) NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="user_role" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="avaibility" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="user_doctor" Member="doctors" ThisKey="userid" OtherKey="userid" Type="doctor" />
+      <Association Name="user_employee" Member="employees" ThisKey="userid" OtherKey="userid" Type="employee" />
+    </Type>
+  </Table>
+</Database>
