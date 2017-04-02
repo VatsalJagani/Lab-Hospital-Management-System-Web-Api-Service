@@ -1,0 +1,36 @@
+Smart ASP.NET
+=====================
+=====================
+
+username	: vatsaljagani
+password	: HmsCloud123
+
+
+
+
+////////server/////////
+location	: US
+Hosting Account ID	: vatsaljagani-001
+Password	: same
+Root Folder Name	: hms
+Website type	: ASP.NET
+
+
+
+////////FTP////////////
+address		: FTP.SMARTASP.NET
+Username	: vatsaljagani-001
+Password	: same as control panel
+FTP directory	: \
+ftp path	: hms
+
+
+
+///////Database/////////
+type	: MSSQL 2014
+name	: db_a1d838_vatsaljagani
+password: HmsCloud123
+Connection String	: "Data Source=SQL5020.SmarterASP.NET;Initial Catalog=DB_A1D838_vatsaljagani;User Id=DB_A1D838_vatsaljagani_admin;Password=HmsCloud123;"
+
+
+
