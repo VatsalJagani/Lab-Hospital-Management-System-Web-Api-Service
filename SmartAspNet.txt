@@ -9,11 +9,11 @@ password	: HmsCloud123
 
 
 ////////server/////////
-location	: US
+location		: US
 Hosting Account ID	: vatsaljagani-001
-Password	: same
+Password		: same
 Root Folder Name	: hms
-Website type	: ASP.NET
+Website type		: ASP.NET
 
 
 
@@ -27,9 +27,11 @@ ftp path	: hms
 
 
 ///////Database/////////
-type	: MSSQL 2014
-name	: db_a1d838_vatsaljagani
-password: HmsCloud123
+server name	: SQL5020.SmarterASP.NET
+type		: MSSQL 2014
+database name	: db_a1d838_vatsaljagani
+username	: DB_A1D838_vatsaljagani_admin
+password	: HmsCloud123
 Connection String	: "Data Source=SQL5020.SmarterASP.NET;Initial Catalog=DB_A1D838_vatsaljagani;User Id=DB_A1D838_vatsaljagani_admin;Password=HmsCloud123;"
 
 
