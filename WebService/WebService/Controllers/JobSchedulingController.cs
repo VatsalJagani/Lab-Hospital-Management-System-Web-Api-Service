@@ -10,10 +10,24 @@ namespace WebService.Controllers
 {
     public class JobSchedulingController : ApiController
     {
-
-        public List<Employee> getEmployeeList()
+        [Route("api/emp/login/")]
+        public bool login(int userid, string password)
         {
-            List<Employee> list = new List<Employee>();
+            using (hmsDataContext d = new hmsDataContext())
+            {
+                user u = d.users.FirstOrDefault(p => p.userid == userid);
+                if (u != null && u.password == password)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        [Route("api/emp/")]
+        public EmployeeList getEmployeeList()
+        {
+            EmployeeList employees = new EmployeeList();
             using (hmsDataContext d = new hmsDataContext())
             {
                 try
@@ -21,7 +35,7 @@ namespace WebService.Controllers
                     IQueryable<employee> l = d.employees.AsQueryable();
                     foreach (employee e in l)
                     {
-                        list.Add(new Employee(e));
+                        employees.list.Add(new Employee(e));
                     }
                 }
                 catch (Exception ex)
@@ -29,12 +43,13 @@ namespace WebService.Controllers
                     // for error message
                 }
             }
-            return list;
+            return employees;
         }
 
-        public List<Place> getPlaceList()
+        [Route("api/places/")]
+        public PlaceList getPlaceList()
         {
-            List<Place> list = new List<Place>();
+            PlaceList places = new PlaceList();
             using (hmsDataContext d = new hmsDataContext())
             {
                 try
@@ -42,7 +57,7 @@ namespace WebService.Controllers
                     IQueryable<place> l = d.places.AsQueryable();
                     foreach (place p in l)
                     {
-                        list.Add(new Place(p));
+                        places.list.Add(new Place(p));
                     }
                 }
                 catch (Exception ex)
@@ -50,9 +65,10 @@ namespace WebService.Controllers
                     // for error message
                 }
             }
-            return list;
+            return places;
         }
 
+        [Route("api/schedule/")]
         public bool scheduleDuty(int placeId, int shift, int empId)
         {
             using (hmsDataContext d = new hmsDataContext())

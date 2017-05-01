@@ -31,18 +31,22 @@ namespace WebService.Controllers
 
         
         [Route("api/checkins/")]
-        public CheckinList getPatientCheckInList([FromBody] string patientID)
+        public CheckinList getPatientCheckInList([FromUri] string patientID)
         {
             CheckinList checkins = new CheckinList();
             using (hmsDataContext d = new hmsDataContext())
             {
                 try
                 {
+                    //System.IO.StreamWriter file = new System.IO.StreamWriter("d:\\test.txt", true);
+                    
                     IQueryable<checkin> l = d.checkins.Where(i => i.pid == Int32.Parse(patientID));
                     foreach(checkin c in l)
                     {
                         checkins.list.Add(new Checkin(c));
+                        //file.WriteLine(c.checkin_no+"  "+c.pid+"\n");
                     }
+                    //file.Close();
                 }
                 catch (Exception ex)
                 {
@@ -53,9 +57,9 @@ namespace WebService.Controllers
         }
 
         [Route("api/bills/")]
-        public List<Bill> getPatientBills(string patientID, int checkinNo)
+        public BillList getPatientBills(string patientID, int checkinNo)
         {
-            List<Bill> list = new List<Bill>();
+            BillList bills = new BillList();
             using (hmsDataContext d = new hmsDataContext())
             {
                 try
@@ -63,7 +67,7 @@ namespace WebService.Controllers
                     IQueryable<bill> l = d.bills.Where(i => i.checkin_no == checkinNo && i.pid == Int32.Parse(patientID));
                     foreach (bill b in l)
                     {
-                        list.Add(new Bill(b));
+                        bills.list.Add(new Bill(b));
                     }
                 }
                 catch (Exception ex)
@@ -71,15 +75,15 @@ namespace WebService.Controllers
                     // for error message
                 }
             }
-            return list;
+            return bills;
             
         }
 
 
         [Route("api/lab_reports/")]
-        public List<LabReport> getPatientLaboratoryReports(string patientID, int checkinNo)
+        public LabReportList getPatientLaboratoryReports(string patientID, int checkinNo)
         {
-            List<LabReport> list = new List<LabReport>();
+            LabReportList lab_reports = new LabReportList();
             using (hmsDataContext d = new hmsDataContext())
             {
                 try
@@ -87,7 +91,7 @@ namespace WebService.Controllers
                     IQueryable<lab_report> l = d.lab_reports.Where(i => i.checkin_no == checkinNo && i.pid == Int32.Parse(patientID));
                     foreach (lab_report lr in l)
                     {
-                        list.Add(new LabReport(lr));
+                        lab_reports.list.Add(new LabReport(lr));
                     }
                 }
                 catch (Exception ex)
@@ -95,14 +99,14 @@ namespace WebService.Controllers
                     // for error message
                 }
             }
-            return list;
+            return lab_reports;
 
         }
 
         [Route("api/treatments")]
-        public List<TreatmentReport> getPatientTreatmentReports(string patientID, int checkinNo)
+        public TreatmentReportList getPatientTreatmentReports(string patientID, int checkinNo)
         {
-            List<TreatmentReport> list = new List<TreatmentReport>();
+            TreatmentReportList treatments = new TreatmentReportList();
             using (hmsDataContext d = new hmsDataContext())
             {
                 try
@@ -110,7 +114,7 @@ namespace WebService.Controllers
                     IQueryable<treatment> l = d.treatments.Where(i => i.checkin_no == checkinNo && i.pid == Int32.Parse(patientID));
                     foreach (treatment t in l)
                     {
-                        list.Add(new TreatmentReport(t));
+                        treatments.list.Add(new TreatmentReport(t));
                     }
                 }
                 catch (Exception ex)
@@ -118,15 +122,15 @@ namespace WebService.Controllers
                     // for error message
                 }
             }
-            return list;
+            return treatments;
 
         }
 
         
         [Route("api/medical_bills/")]
-        public List<MedicalBill> getPatientMedicalBills(string patientID, int checkinNo)
+        public MedicalBillList getPatientMedicalBills(string patientID, int checkinNo)
         {
-            List<MedicalBill> list = new List<MedicalBill>();
+            MedicalBillList medical_bills = new MedicalBillList();
             using (hmsDataContext d = new hmsDataContext())
             {
                 try
@@ -134,7 +138,7 @@ namespace WebService.Controllers
                     IQueryable<medical_bill> l = d.medical_bills.Where(i => i.checkin_no == checkinNo && i.pid == Int32.Parse(patientID));
                     foreach (medical_bill t in l)
                     {
-                        list.Add(new MedicalBill(t));
+                        medical_bills.list.Add(new MedicalBill(t));
                     }
                 }
                 catch (Exception ex)
@@ -142,7 +146,7 @@ namespace WebService.Controllers
                     // for error message
                 }
             }
-            return list;
+            return medical_bills;
 
         }
     }

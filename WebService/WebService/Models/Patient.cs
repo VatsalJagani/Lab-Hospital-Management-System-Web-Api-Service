@@ -77,6 +77,14 @@ namespace WebService.Models
         }
     }
 
+    public class BillList
+    {
+        public List<Bill> list { get; set; }
+        public BillList()
+        {
+            list = new List<Bill>();
+        }
+    }
     public class Bill
     {
         public String pid { get; set; }
@@ -115,6 +123,14 @@ namespace WebService.Models
         }
     }
 
+    public class TreatmentReportList
+    {
+        public List<TreatmentReport> list { get; set; }
+        public TreatmentReportList()
+        {
+            list = new List<TreatmentReport>();
+        }
+    }
     public class TreatmentReport
     {
         public String pid { get; set; }
@@ -144,6 +160,14 @@ namespace WebService.Models
         }
     }
 
+    public class LabReportList
+    {
+        public List<LabReport> list { get; set; }
+        public LabReportList()
+        {
+            list = new List<LabReport>();
+        }
+    }
     public class LabReport
     {
         public String pid { get; set; }
@@ -190,6 +214,14 @@ namespace WebService.Models
         }
     }
 
+    public class MedicalBillList
+    {
+        public List<MedicalBill> list { get; set; }
+        public MedicalBillList()
+        {
+            list = new List<MedicalBill>();
+        }
+    }
     public class MedicalBill
     {
         public String pid { get; set; }
