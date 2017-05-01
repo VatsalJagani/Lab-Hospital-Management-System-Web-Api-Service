@@ -6,15 +6,17 @@
 package classes;
 
 import java.util.Date;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author VATSAL
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LabReport {
-    String pid;
-     Double checkin_no,laboratory_no,glucose,hemoglobin,rdc,wbc,afp,psa,cost;
-      Date lab_date;
+    public String pid;
+    public Double checkin_no,laboratory_no,glucose,hemoglobin,rdc,wbc,afp,psa,cost;
+    public Date lab_date;
       
       
      public String getPid() {
@@ -32,28 +34,24 @@ public class LabReport {
      public Double getHemoglobin() {
        return hemoglobin;
     }
-     public Double getRDC() {
+     public Double getRdc() {
        return rdc;
     }
-     public Double getWBC() {
+     public Double getWbc() {
        return wbc;
     }
-     public Double getAFP() {
+     public Double getAfp() {
        return afp;
     }
-     public Double getPSA() {
+     public Double getPsa() {
        return psa;
     }
      public Double getCost() {
        return cost;
     }
-     public String getLabDate(){
-          if(lab_date==null)
-        {
-            return "not Specified date";
-        }
-        else{
-            return lab_date.toString();
-        }
+     public Date getLabDate(){
+          
+            return lab_date;
+        
     }
 }

@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/java/classes/CheckinList.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>18</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Project/SOA/REstFull/HmsClient/src/java/classes/Checkin.java</file>
-            <file>file:/D:/Project/SOA/REstFull/HmsClient/src/java/classes/ServiceConnection.java</file>
-            <file>file:/D:/Project/SOA/REstFull/HmsClient/web/index.jsp</file>
-            <file>file:/D:/Project/SOA/REstFull/HmsClient/web/p/patient_info.jsp</file>
-            <file>file:/D:/Project/SOA/REstFull/HmsClient/src/java/servlets/GetCheckins.java</file>
-            <file>file:/D:/Project/SOA/REstFull/HmsClient/src/java/servlets/CheckPatientID.java</file>
-            <file>file:/D:/Project/SOA/REstFull/HmsClient/web/p/checkin.jsp</file>
-            <file>file:/D:/Project/SOA/REstFull/HmsClient/src/java/classes/CheckinList.java</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/src/java/servlets/GetScheduleDetails.java</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/src/java/servlets/CheckPatientID.java</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/web/index.jsp</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/src/java/classes/Patient.java</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/web/s/sch.jsp</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/web/p/reports.jsp</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/src/java/classes/Checkin.java</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/src/java/servlets/SetSch.java</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/src/java/servlets/GetReports.java</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/web/p/checkin.jsp</file>
+            <file>file:/D:/Project/SOA_Project/HmsClient/web/p/patient_info.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -11,13 +11,13 @@ import java.util.List;
  *
  * @author VATSAL
  */
-public class CheckinList {
-    List<Checkin> list;
+public class EmployeeList {
+    List<Employee> empList;
     
-    public List<Checkin> getList(){
-        return list;
+    public List<Employee> getList(){
+        return empList;
     }
-    public void setList(List<Checkin> list){
-        this.list=list;
+    public void setList(List<Employee> list){
+        this.empList=list;
     }
 }

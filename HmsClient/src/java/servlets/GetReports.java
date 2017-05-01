@@ -5,8 +5,11 @@
  */
 package servlets;
 
+import classes.BillList;
+import classes.LabReportList;
 import classes.Patient;
 import classes.ServiceConnection;
+import classes.TreatmentReportList;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +22,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  *
  * @author VATSAL
  */
-public class CheckPatientID extends HttpServlet {
+public class GetReports extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,50 +33,33 @@ public class CheckPatientID extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    HttpServletRequest req;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        req=request;
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
-        
-        CaptchasDotNet captchas = new CaptchasDotNet(
-                request.getSession(true), // Ensure session
-                "demo", // client
-                "secret" // secret
-        );
-// Read the form values
-        String patientID = request.getParameter("patientID");
-        String captcha = request.getParameter("captcha");
-
-        Patient p = null;
-// Check captcha
-        String body = null;
-        switch (captchas.check(captcha)) {
-            case 's':
-                body = "Session seems to be timed out or broken. ";
-                body += "Please try again or report error to administrator.";
-                break;
-            case 'm':
-                body = "Every CAPTCHA can only be used once. ";
-                body += "The current CAPTCHA has already been used. ";
-                body += "Please use back button and reload";
-                break;
-            case 'w':
-                body = "You entered the wrong captcha.. ";
-                body += "Please use back button and try again. ";
-                break;
-            default:
-                p = getPatientDetails(patientID);
-                if (p == null) {
-                    body = "Patient not found...";
-                } else {
-                    System.out.println(p);
-                    session.setAttribute("patient", p);
-                    request.getRequestDispatcher("/p/patient_info.jsp").forward(request, response);
-                }
-                break;
+        Patient p=(Patient)session.getAttribute("patient");
+        boolean flag=false;
+        double check=-55;
+        try{
+            check=Double.parseDouble(request.getParameter("check_no"));
         }
-        if (p == null) {
-            request.setAttribute("msg", body);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+        catch(Exception e){
+            
+        }
+        if(p!=null && check!=-55){
+            boolean a=getReports(p,(int)check);
+            if(a)
+                request.getRequestDispatcher("/p/reports.jsp").forward(request, response);
+            else{
+                request.setAttribute("msg", "Error found...Please try again later!!");
+                request.getRequestDispatcher("/p/patient_info.jsp").forward(request, response);
+            }
+        }
+        else{
+            request.setAttribute("msg", "Error found...Please try again later!!");
+            request.getRequestDispatcher("/p/patient_info.jsp").forward(request, response);
         }
     }
 
@@ -116,20 +102,37 @@ public class CheckPatientID extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private Patient getPatientDetails(String patientID) {
-        /* store patient object in session */
-        Patient p = null;
+    private boolean getReports(Patient p,int checkinno) {
+        BillList blist=null;
+        LabReportList llist=null;
+        TreatmentReportList trlist=null;
         try {
-            String output = ServiceConnection.output("patient?patientID=" + patientID);
+            String output = ServiceConnection.output("bills?patientID=" + p.pid+"&checkinNo="+checkinno);
             ObjectMapper mapper = new ObjectMapper();
-
+            System.out.println("Output1111:"+output);
             //JSON from String to Object
-            p = mapper.readValue(output, Patient.class);
+            blist = mapper.readValue(output, BillList.class);
+            req.setAttribute("bills", blist);
             
-        } catch (Exception e) {
+            String output2 = ServiceConnection.output("lab_reports?patientID=" + p.pid+"&checkinNo="+checkinno);
+            ObjectMapper mapper2 = new ObjectMapper();
+            System.out.println("Output2222:"+output2);
+            //JSON from String to Object
+            llist = mapper.readValue(output2, LabReportList.class);
+            req.setAttribute("lab_reports",llist);
+            
+            String output3 = ServiceConnection.output("treatments?patientID=" + p.pid+"&checkinNo="+checkinno);
+            ObjectMapper mapper3 = new ObjectMapper();
+            System.out.println("Output3333:"+output3);
+            //JSON from String to Object
+            trlist = mapper.readValue(output3, TreatmentReportList.class);
+            req.setAttribute("treatments", trlist);
 
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        return p;
+        return false;
     }
 }

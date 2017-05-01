@@ -6,15 +6,17 @@
 package classes;
 
 import java.util.Date;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author VATSAL
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Bill {
-    String pid;
-     Double checkin_no,bill_no,doctor_fee,room_fee,lab_fee,medical_fee,op_fee,other_fee;
-     Date bill_date;
+    public String pid;
+    public Double checkin_no,bill_no,doctor_fee,room_fee,lab_fee,medical_fee,op_fee,other_fee;
+    public Date bill_date;
 
      
      public String getPid() {
@@ -44,13 +46,7 @@ public class Bill {
      public Double getOtherFee() {
        return other_fee;
     }
-     public String getBillDate(){
-          if(bill_date==null)
-        {
-            return "not Specified date";
-        }
-        else{
-            return bill_date.toString();
-        }
+     public Date getBillDate(){
+            return bill_date;
     }
 }

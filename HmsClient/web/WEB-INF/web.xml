@@ -12,6 +12,18 @@
         <servlet-name>GetCheckins</servlet-name>
         <servlet-class>servlets.GetCheckins</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetReports</servlet-name>
+        <servlet-class>servlets.GetReports</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetScheduleDetails</servlet-name>
+        <servlet-class>servlets.GetScheduleDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SetSch</servlet-name>
+        <servlet-class>servlets.SetSch</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>hello</servlet-name>
         <url-pattern>/CheckPatientID</url-pattern>
@@ -19,6 +31,18 @@
     <servlet-mapping>
         <servlet-name>GetCheckins</servlet-name>
         <url-pattern>/GetCheckins</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetReports</servlet-name>
+        <url-pattern>/GetReports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetScheduleDetails</servlet-name>
+        <url-pattern>/GetScheduleDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SetSch</servlet-name>
+        <url-pattern>/SetSch</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

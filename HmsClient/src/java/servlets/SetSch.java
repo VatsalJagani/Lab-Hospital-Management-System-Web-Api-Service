@@ -5,23 +5,18 @@
  */
 package servlets;
 
-import classes.CheckinList;
-import classes.Patient;
-import classes.ServiceConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  *
  * @author VATSAL
  */
-public class GetCheckins extends HttpServlet {
+public class SetSch extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +30,20 @@ public class GetCheckins extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session=request.getSession();
-        Patient p=(Patient)session.getAttribute("patient");
-        boolean flag=false;
-        if(p!=null){
-            CheckinList clist=getCheckins(p);
-            if(clist!=null){
-                request.setAttribute("clist", clist);
-                request.getRequestDispatcher("/p/checkin.jsp").forward(request, response);
-            }
-        }
-        else{
-            request.setAttribute("msg", "Unexpected error found, try again!!");
-            request.getRequestDispatcher("/p/patient_info.jsp").forward(request, response);
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SetSch</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SetSch at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
         }
     }
 
@@ -90,20 +86,4 @@ public class GetCheckins extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private CheckinList getCheckins(Patient p) {
-        CheckinList clist=null;
-        try {
-            String output = ServiceConnection.output("checkins?patientID=" + p.pid);
-            ObjectMapper mapper = new ObjectMapper();
-
-            System.out.println("Output:"+output);
-            //JSON from String to Object
-            clist = mapper.readValue(output, CheckinList.class);
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-        return clist;
-    }
 }

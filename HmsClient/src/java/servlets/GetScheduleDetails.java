@@ -5,9 +5,15 @@
  */
 package servlets;
 
+import classes.BillList;
+import classes.EmployeeList;
+import classes.LabReportList;
 import classes.Patient;
+import classes.PlaceList;
 import classes.ServiceConnection;
+import classes.TreatmentReportList;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +25,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  *
  * @author VATSAL
  */
-public class CheckPatientID extends HttpServlet {
+public class GetScheduleDetails extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,50 +36,26 @@ public class CheckPatientID extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    HttpServletRequest req;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        req=request;
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session=request.getSession();
-        
-        CaptchasDotNet captchas = new CaptchasDotNet(
-                request.getSession(true), // Ensure session
-                "demo", // client
-                "secret" // secret
-        );
-// Read the form values
-        String patientID = request.getParameter("patientID");
-        String captcha = request.getParameter("captcha");
-
-        Patient p = null;
-// Check captcha
-        String body = null;
-        switch (captchas.check(captcha)) {
-            case 's':
-                body = "Session seems to be timed out or broken. ";
-                body += "Please try again or report error to administrator.";
-                break;
-            case 'm':
-                body = "Every CAPTCHA can only be used once. ";
-                body += "The current CAPTCHA has already been used. ";
-                body += "Please use back button and reload";
-                break;
-            case 'w':
-                body = "You entered the wrong captcha.. ";
-                body += "Please use back button and try again. ";
-                break;
-            default:
-                p = getPatientDetails(patientID);
-                if (p == null) {
-                    body = "Patient not found...";
-                } else {
-                    System.out.println(p);
-                    session.setAttribute("patient", p);
-                    request.getRequestDispatcher("/p/patient_info.jsp").forward(request, response);
-                }
-                break;
+        boolean flag=false;
+        /* check login here*/
+        if(true){
+            boolean a=getLists();
+            if(a)
+                request.getRequestDispatcher("/s/sch.jsp").forward(request, response);
+            else{
+                request.setAttribute("msg", "Error found...Please try again later!!");
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            }
         }
-        if (p == null) {
-            request.setAttribute("msg", body);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+        else{
+            request.setAttribute("msg", "Error found...Please try again later!!");
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 
@@ -116,20 +98,29 @@ public class CheckPatientID extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private Patient getPatientDetails(String patientID) {
-        /* store patient object in session */
-        Patient p = null;
+    private boolean getLists() {
+        EmployeeList elist=null;
+        PlaceList plist=null;
         try {
-            String output = ServiceConnection.output("patient?patientID=" + patientID);
+            String output = ServiceConnection.output("emp");
             ObjectMapper mapper = new ObjectMapper();
-
+            System.out.println("Output1111:"+output);
             //JSON from String to Object
-            p = mapper.readValue(output, Patient.class);
+            elist = mapper.readValue(output, EmployeeList.class);
+            req.setAttribute("emp", elist);
             
+            String output2 = ServiceConnection.output("places");
+            ObjectMapper mapper2 = new ObjectMapper();
+            System.out.println("Output2222:"+output2);
+            //JSON from String to Object
+            plist = mapper.readValue(output2, PlaceList.class);
+            req.setAttribute("places",plist);
+            
+            return true;
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        return p;
+        return false;
     }
 }

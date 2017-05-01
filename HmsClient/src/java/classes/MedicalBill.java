@@ -6,11 +6,15 @@
 package classes;
 
 import java.util.Date;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author VATSAL
+ * 
+ * Not using right now , but can be useful in future
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MedicalBill {
     String pid,med_description;
      Double checkin_no,med_no,cost;
@@ -32,13 +36,9 @@ public class MedicalBill {
        return cost;
     }
     
-   public String getMedDate(){
-          if(med_date==null)
-        {
-            return "not Specified date";
-        }
-        else{
-            return med_date.toString();
-        }
+   public Date getMedDate(){
+          
+            return med_date;
+        
     }
 }

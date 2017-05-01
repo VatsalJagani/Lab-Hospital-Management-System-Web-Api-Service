@@ -1,6 +1,6 @@
 <%-- 
-    Document   : patient_info
-    Created on : Mar 21, 2017, 9:28:21 PM
+    Document   : TreatmentReports
+    Created on : Mar 5, 2017, 1:30:22 PM
     Author     : VATSAL
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Patient Info</title>
+    <title>Patient Reports</title>
     <link href="${initParam['Root']}/style/css/bootstrap.min.css" rel="stylesheet">
     <link href="${initParam['Root']}/style/css/heroic-features.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -45,7 +45,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Patient Info</a>
+                        <a href="${initParam['Root']}/p/patient_info.jsp">Patient Info</a>
                     </li>
                     <li>
                         <a href="${initParam['Root']}/GetCheckins">Check-In List</a>
@@ -62,45 +62,87 @@
     <div class="container">
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
-            <h1>Patient Info</h1>
-            <p>Patient Name : ${patient.name}</p>
+            <h1>Patient Reports</h1>
+            <p>This all reports for Patient Name : ${patient.name}</p>
         </header>
 
         <hr>
-
-        <table class="table table-striped">
+        <h4>Treatment Reports</h4>
+        <table class="table table-bordered table-hover table-responsive">
             <tr>
-                <th>Name</th>
-                <td>${patient.name}</td>
+                <th>No.</th>
+                <th>Date</th>
+                <th>Medical Prescription</th>
+                <th>Lab Prescription</th>
+                <th>Suggestion</th>
             </tr>
+        <c:forEach items="${treatments.list}" var="tr">
             <tr>
-                <th>Address</th>
-                <td>${patient.address}</td>
+                <td><fmt:formatNumber maxFractionDigits="0">${tr.trNo}</fmt:formatNumber></td>
+                <td><fmt:formatDate value="${tr.trDate}" type="date"></fmt:formatDate></td>
+                <td>${tr.medicalPre}</td>
+                <td>${tr.labPre}</td>
+                <td>${tr.suggestion}</td>
             </tr>
-            <tr>
-                <th>City</th>
-                <td>${patient.city}</td>
-            </tr>
-            <tr>
-                <th>Birth-Date</th>
-                 <td><fmt:formatDate value="${patient.birthdate}" type="date"></fmt:formatDate></td>
-            </tr>
-            <tr>
-                <th>Gender</th>
-                <td><c:if test="${patient.gender}">Male</c:if><c:if test="${!patient.gender}">Female</c:if></td>
-            </tr>
-            <tr>
-                <th>Marital Status</th>
-                <td><c:if test="${patient.maritalStatus}">Married</c:if><c:if test="${!patient.maritalStatus}">Un-married</c:if></td>
-            </tr>
-            <tr>
-                <th>Registration Date</th>
-                <td><fmt:formatDate value="${patient.regDate}" type="date"></fmt:formatDate></td>
-            </tr>
+        </c:forEach>
         </table>
         
         <hr>
-        <a href="${initParam['Root']}/GetCheckins">Get All Check-Ins</a>
+        <h4>Laboratory Reports</h4>
+        <table class="table table-bordered table-hover table-responsive">
+            <tr>
+                <th>No.</th>
+                <th>Date</th>
+                <th>Glucose</th>
+                <th>Hemoglobin</th>
+                <th>RDC</th>
+                <th>WBC</th>
+                <th>AFP</th>
+                <th>PSA</th>
+            </tr>
+        <c:forEach items="${lab_reports.list}" var="tr">
+            <tr>
+                <td><fmt:formatNumber maxFractionDigits="0">${tr.laboratoryNo}</fmt:formatNumber></td>
+                <td><fmt:formatDate value="${tr.labDate}" type="date"></fmt:formatDate></td>
+                <td>${tr.glucose}</td>
+                <td>${tr.hemoglobin}</td>
+                <td>${tr.rdc}</td>
+                <td>${tr.wbc}</td>
+                <td>${tr.afp}</td>
+                <td>${tr.psa}</td>
+            </tr>
+        </c:forEach>
+        </table>
+        
+        <hr>
+        <h4>Hospital Bills</h4>
+        <table class="table table-bordered table-hover table-responsive">
+            <tr>
+                <th>No.</th>
+                <th>Date</th>
+                <th>Doctor Fee</th>
+                <th>Room Fee</th>
+                <th>Lab Fee</th>
+                <th>Medical Fee</th>
+                <th>Operation Charge</th>
+                <th>Other</th>
+            </tr>
+        <c:forEach items="${bills.list}" var="tr">
+            <tr>
+                <td><fmt:formatNumber maxFractionDigits="0">${tr.billNo}</fmt:formatNumber></td>
+                <td><fmt:formatDate value="${tr.billDate}" type="date"></fmt:formatDate></td>
+                <td><fmt:formatNumber maxFractionDigits="2">${tr.doctorFee}</fmt:formatNumber></td>
+                <td><fmt:formatNumber maxFractionDigits="2">${tr.roomFee}</fmt:formatNumber></td>
+                <td><fmt:formatNumber maxFractionDigits="2">${tr.labFee}</fmt:formatNumber></td>
+                <td><fmt:formatNumber maxFractionDigits="2">${tr.medicalFee}</fmt:formatNumber></td>
+                <td><fmt:formatNumber maxFractionDigits="2">${tr.opFee}</fmt:formatNumber></td>
+                <td><fmt:formatNumber maxFractionDigits="2">${tr.otherFee}</fmt:formatNumber></td>
+                
+            </tr>
+        </c:forEach>
+        </table>
+
+        
         <hr>
 
         <!-- Footer -->

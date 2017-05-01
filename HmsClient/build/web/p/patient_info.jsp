@@ -3,8 +3,9 @@
     Created on : Mar 21, 2017, 9:28:21 PM
     Author     : VATSAL
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +39,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Cancer-Care</a>
+                <a class="navbar-brand" href="${initParam['Root']}/index.jsp">Cancer-Care</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -47,7 +48,7 @@
                         <a href="#">Patient Info</a>
                     </li>
                     <li>
-                        <a href="checkin.jsp">Check-In List</a>
+                        <a href="${initParam['Root']}/GetCheckins">Check-In List</a>
                     </li>
                     
                 </ul>
@@ -62,7 +63,7 @@
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
             <h1>Patient Info</h1>
-            <p>Patient-ID : ${patient.pid}</p>
+            <p>Patient Name : ${patient.name}</p>
         </header>
 
         <hr>
@@ -82,20 +83,24 @@
             </tr>
             <tr>
                 <th>Birth-Date</th>
-                 <td>${patient.birthdate}</td>
+                 <td><fmt:formatDate value="${patient.birthdate}" type="date"></fmt:formatDate></td>
             </tr>
             <tr>
                 <th>Gender</th>
-                <td><c:if test="${patient.gender}">Male</c:if><%--<c:if test="${!patient.gender}">Female</c:if>--%></td>
+                <td><c:if test="${patient.gender}">Male</c:if><c:if test="${!patient.gender}">Female</c:if></td>
+            </tr>
+            <tr>
+                <th>Marital Status</th>
+                <td><c:if test="${patient.maritalStatus}">Married</c:if><c:if test="${!patient.maritalStatus}">Un-married</c:if></td>
             </tr>
             <tr>
                 <th>Registration Date</th>
-                <td>${patient.regDate}</td>
+                <td><fmt:formatDate value="${patient.regDate}" type="date"></fmt:formatDate></td>
             </tr>
         </table>
         
         <hr>
-        <a href="GetCheckins">Get All Check-Ins</a>
+        <a href="${initParam['Root']}/GetCheckins">Get All Check-Ins</a>
         <hr>
 
         <!-- Footer -->

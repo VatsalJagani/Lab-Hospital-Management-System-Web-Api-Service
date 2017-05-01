@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : 4 Mar, 2017, 4:08:50 PM
-    Author     : sahdev
+    Author     : Vatsal Jagani
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -115,8 +115,8 @@ CaptchasDotNet captchas = new CaptchasDotNet(
     </div>
     <!-- /.container -->
 
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="${initParam['Root']}/style/js/jquery.js"></script>
+    <script src="${initParam['Root']}/style/js/bootstrap.min.js"></script>
 </body>
 
 </html>

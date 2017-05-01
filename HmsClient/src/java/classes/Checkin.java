@@ -6,24 +6,23 @@
 package classes;
 
 import java.util.Date;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**
  *
  * @author VATSAL
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Checkin {
-    String pid;
-    Double checkin_no,checkin_by,room;
-    Date in_time,out_time;
+    public String pid;
+    public Double checkin_no,room,checkin_by;
+    public Date in_time,out_time;
             
     public String getPid() {
        return pid;
     }
     public Double getCheckinNo() {
        return checkin_no;
-    }
-    public Double getCheckinBy() {
-       return checkin_by;
     }
     public Double getRoom() {
        return room;

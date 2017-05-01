@@ -165,8 +165,12 @@ CaptchasDotNet captchas = new CaptchasDotNet(
       out.write("    </div>\n");
       out.write("    <!-- /.container -->\n");
       out.write("\n");
-      out.write("    <script src=\"js/jquery.js\"></script>\n");
-      out.write("    <script src=\"js/bootstrap.min.js\"></script>\n");
+      out.write("    <script src=\"");
+      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${initParam['Root']}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+      out.write("/style/js/jquery.js\"></script>\n");
+      out.write("    <script src=\"");
+      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${initParam['Root']}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+      out.write("/style/js/bootstrap.min.js\"></script>\n");
       out.write("</body>\n");
       out.write("\n");
       out.write("</html>");
